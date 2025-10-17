@@ -31,9 +31,9 @@ This project is built using a **microservice architecture** to ensure separation
 
 <h2>📈 Project Roadmap</h2>
 
-⦿ [ ] Develop and train the core Medical Insurance Prediction model.
+⦿ [x] Develop and train the core Medical Insurance Prediction model.
 
-⦿ [ ] Build the Python/Flask microservice for the model.
+⦿ [x] Build the Python/Flask microservice for the model.
 
 ⦿ [ ] Set up the Node.js gateway and connect it to the Flask service.
 
