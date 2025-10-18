@@ -35,7 +35,7 @@ This project is built using a **microservice architecture** to ensure separation
 
 ⦿ [x] Build the Python/Flask microservice for the model.
 
-⦿ [ ] Set up the Node.js gateway and connect it to the Flask service.
+⦿ [x] Set up the Node.js gateway and connect it to the Flask service.
 
 ⦿ [ ] Develop the complete React user interface.
 
