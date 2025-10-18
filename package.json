@@ -1,0 +1,26 @@
+{
+  "name": "insurance_predictor",
+  "version": "1.0.0",
+  "description": "**--ONGOING--** <h1>InsuranSure: The All-in-One Insurance Premium Estimator 🛡️ </h1>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "module",
+    "url": "git+https://github.com/Richa-2005/Insurance_Predictor.git"
+  },
+  "author": "Richa Gupta",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.10"
+  },
+  "bugs": {
+    "url": "https://github.com/Richa-2005/Insurance_Predictor/issues"
+  },
+  "homepage": "https://github.com/Richa-2005/Insurance_Predictor#readme"
+}
