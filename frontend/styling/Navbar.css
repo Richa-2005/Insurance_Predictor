@@ -1,0 +1,91 @@
+
+*{
+    margin: 0px;
+}
+:root {
+  --primary-bg: #8DBCC7;
+  --secondary-bg: #A4CCD9;
+  --hover-bg: #C4E1E6;
+  --accent-color: #EBFFD8;
+  --text-color: #2c3e50; 
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--primary-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.logoPic {
+  height: 70px;
+  width: auto;
+  transition: transform 0.3s ease;
+  object-fit: fill;
+}
+
+.logoPic:hover {
+  transform: scale(1.1);
+}
+
+.pagesLink {
+  margin: 0 1.5rem;
+  padding: 0.5rem 0;
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.pagesLink::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-color);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.pagesLink:hover::after {
+  width: 100%;
+}
+
+.pagesLink:hover {
+  color: white;
+}
+
+.pagesLink.active {
+  color: white;
+  font-weight: 700;
+}
+
+.pagesLink.active::after {
+  width: 100%;
+}
+
+.profilePic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.profilePic:hover {
+  transform: scale(1.1) rotate(6deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
