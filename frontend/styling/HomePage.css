@@ -1,0 +1,184 @@
+
+.homepage-container {
+  background-color: #f0f4f8; 
+}
+
+
+.hero-section {
+  text-align: center;
+  padding: 5rem 1rem;
+  background-color: #ffffff;
+}
+
+.main-app-title {
+  font-size: 7rem;
+  font-weight: 900; 
+  color: #2c3e50;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.1em;
+}
+
+.hero-title {
+  font-size: 2rem; 
+  font-weight: 700;
+  color: #8DBCC7;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem; 
+  color: #4a5568; 
+  max-width: 42rem; 
+  margin: 0 auto 2rem auto;
+}
+.india-badge {
+    margin-bottom: 2.5rem;
+}
+
+.india-badge span {
+    display: inline-block;
+    background-color: #EBFFD8; 
+    color: #556B2F; 
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.directingToPage{
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px; 
+  font-size: 1.25rem; 
+  transition: all 0.2s ease-in-out;
+  border: none;
+}
+
+.directingToPage-abled{
+  background-color: #8DBCC7;
+  color: white;
+}
+
+.directingToPage-abled:hover {
+  background-color: #A4CCD9;
+  transform: scale(1.05);
+}
+
+.directingToPage-dis {
+  background-color: #d1d5db; 
+  color: #6b7280; 
+  cursor: not-allowed;
+}
+
+.how-it-works-section, .factors-section {
+  padding: 4rem 0;
+}
+
+.factors-section {
+    background-color: #ffffff;
+}
+
+.section-title {
+  font-size: 3rem; 
+  font-weight: 700;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 3rem;
+}
+
+.steps-grid, .factors-grid {
+  max-width: 80rem; 
+  margin: 0 auto;
+  display: grid;
+  gap: 2.5rem;
+  padding: 0 1rem;
+}
+
+.step-card {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.step-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  color: #8DBCC7;
+}
+
+.step-icon {
+    height: 3rem;
+    width: 3rem;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  color: #4a5568; 
+  font-size: 1.3rem;
+}
+
+
+.section-subtitle-wrapper {
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8DBCC7;
+    margin-bottom: 2.5rem;
+}
+
+.factor-card {
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb; 
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.factor-card:hover {
+    border-color: #A4CCD9;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.factor-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8DBCC7;
+    margin-bottom: 0.5rem;
+}
+
+.factor-description {
+    color: #4a5568; 
+    font-size: 1.2rem;
+}
+
+@media (min-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+    .factors-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
