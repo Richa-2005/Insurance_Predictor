@@ -19,6 +19,7 @@ export default function MedicalPage() {
 }
 
 
+// --- 1. Predictor Section Component (UPDATED) ---
 const PredictorSection = () => {
   // State for form inputs
   const [age, setAge] = useState('');
@@ -28,15 +29,16 @@ const PredictorSection = () => {
   const [numberOfMajorSurgeries, setNumberOfMajorSurgeries] = useState('');
 
   // State for API interaction
-  const [prediction, setPrediction] = useState(null);
+  const [prediction, setPrediction] = useState(null); // Will store the predicted_premium
+  const [analysis, setAnalysis] = useState(null); // Will store the age_group_analysis object
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [avgPremium] = useState(24500); // Dummy average for visualization
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setPrediction(null);
+    setAnalysis(null);
     setLoading(true);
 
     try {
@@ -62,13 +64,19 @@ const PredictorSection = () => {
 
       if (!response.ok) throw new Error('Server responded with an error.');
       const result = await response.json();
+      
       setPrediction(result.predicted_premium);
+      setAnalysis(result.age_group_analysis);
 
-    } catch (err) { // This block was missing a curly brace
+    } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
+  };
+  
+  const scrollToPlans = () => {
+    document.getElementById('explore-plans')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -77,6 +85,7 @@ const PredictorSection = () => {
         <h2 className="predictor-title">Get Your Instant Estimate</h2>
         <p className="predictor-subtitle">Enter your details to get a data-driven premium estimate.</p>
         <form onSubmit={handleSubmit} className="predictor-form">
+          {/* ... (Form fields remain unchanged) ... */}
           <div className="form-group">
             <label htmlFor="age">Age</label>
             <input id="age" type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="e.g., 45" />
@@ -109,19 +118,33 @@ const PredictorSection = () => {
       </div>
       <div className="result-display-container">
         {error && <div className="error-message">{error}</div>}
-        {prediction !== null && (
-          <div className="result-card">
-            <p className="result-label">Estimated Annual Premium</p>
-            <p className="result-value">₹{prediction.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
-            <div className="result-comparison">
-              <p>Your estimate is <span className={prediction > avgPremium ? 'higher' : 'lower'}>{prediction > avgPremium ? 'higher' : 'lower'}</span> than the average for your demographic.</p>
-            </div>
-          </div>
-        )}
-        {!prediction && !error && (
+        
+        {/* --- Display logic for placeholder vs. result --- */}
+        {!prediction && !analysis && !error && (
             <div className="result-placeholder">
                 <p>Your personalized estimate will appear here.</p>
             </div>
+        )}
+
+        {prediction !== null && analysis !== null && (
+          <div className="result-card">
+            <p className="result-label">Estimated Annual Premium</p>
+            <p className="result-value">₹{prediction.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
+            
+            {/* --- NEW DYNAMIC RANGE GRAPH --- */}
+            <RangeComparisonGraph 
+              userPrice={prediction} 
+              analysis={analysis} 
+            />
+
+            <div className="monthly-breakdown">
+                <p>≈ ₹{(prediction / 12).toLocaleString('en-IN', { maximumFractionDigits: 0 })} per month</p>
+            </div>
+
+            <button className="cta-button" onClick={scrollToPlans}>
+              Explore Plans
+            </button>
+          </div>
         )}
         <p className="disclaimer">This is a data-driven estimate, not an official quote. Prices may vary based on provider and plan details.</p>
       </div>
@@ -129,7 +152,64 @@ const PredictorSection = () => {
   );
 };
 
+// --- New Sub-Component for the DYNAMIC RANGE Graph ---
+const RangeComparisonGraph = ({ userPrice, analysis }) => {
+  const { min_premium, avg_premium, max_premium, age_range } = analysis;
 
+  if (min_premium === null || (max_premium - min_premium === 0)) {
+    return <p className="graph-summary">Not enough data for your age group to build a comparison.</p>;
+  }
+
+  const range = max_premium - min_premium;
+  let userPercent = ((userPrice - min_premium) / range) * 100;
+  let avgPercent = ((avg_premium - min_premium) / range) * 100;
+
+  // Cap percentages
+  userPercent = Math.max(0, Math.min(100, userPercent));
+  avgPercent = Math.max(0, Math.min(100, avgPercent));
+
+  return (
+  <>
+    <div className='labels'>
+      <div className='graph-label user-label'>
+        Your Estimate: ₹{userPrice.toLocaleString('en-IN', {maximumFractionDigits: 0})} 
+      </div>
+      <div className='graph-label avg-label'>
+        Average: ₹{avg_premium.toLocaleString('en-IN', {maximumFractionDigits: 0})}
+      </div>
+      </div>
+    <div className="comparison-graph">
+      
+      <div className="graph-label-container">
+        <div style={{ left: `${userPercent}%` }}> </div>
+        <div style={{ left: `${avgPercent}%` }}> </div>
+      </div>
+
+      {/* --- Graph Track & Markers --- */}
+      <div className="graph-track">
+        <div 
+          className="user-marker" 
+          style={{ left: `${userPercent}%` }}
+        ></div>
+        <div 
+          className="average-marker"
+          style={{ left: `${avgPercent}%` }}
+        ></div>
+      </div>
+
+      {/* --- Min/Max Labels --- */}
+      <div className="graph-min-max-labels">
+        <span>Min: ₹{min_premium.toLocaleString('en-IN')}</span>
+        <span>Max: ₹{max_premium.toLocaleString('en-IN')}</span>
+      </div>
+
+      <p className="graph-summary">
+        This shows where your estimate falls within the actual premium range for ages {age_range}.
+      </p>
+    </div>
+    </>
+  );
+};
 // --- 2. "What's Next?" Guide Component (Unchanged) ---
 const NextStepsSection = () => (
   <section className="next-steps-section">
@@ -153,7 +233,7 @@ const NextStepsSection = () => (
         <div className="step-number">3</div>
         <div className="step-content">
           <h3>Contact Insurers</h3>
-          <p>Reach out to official providers or advisors to get a formal quote and finalize your policy.</p>
+          <p id="explore-plans">Reach out to official providers or advisors to get a formal quote and finalize your policy.</p>
         </div>
       </div>
     </div>
@@ -172,8 +252,8 @@ const ExplorePlansSection = () => {
         { name: 'Aditya Birla', logo: 'https://placehold.co/120x40/E2E8F0/475569?text=Aditya+Birla', link: 'https://www.adityabirlacapital.com/healthinsurance', type: 'Wellness Focused', description: 'Focuses on wellness and preventive care, often rewarding customers for healthy habits.' },
     ];
     return (
-        <section className="explore-plans-section">
-            <h2 className="section-title">Explore Popular Health Insurance Providers</h2>
+        <section className="explore-plans-section" >
+            <h2 className="section-title" >Explore Popular Health Insurance Providers</h2>
             <div className="plans-grid">
                 {plans.map(plan => (
                     <a key={plan.name} href={plan.link} target="_blank" rel="noopener noreferrer" className="plan-card">
@@ -203,15 +283,12 @@ const DidYouKnowSection = () => {
         setFactIndex((prevIndex) => (prevIndex + 1) % facts.length);
     };
 
-    const LightbulbIcon = () => (
-      <svg className="did-you-know-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 00-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 001 1h6a1 1 0 001-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 00-7-7zM9 21a1 1 0 001 1h4a1 1 0 001-1v-1H9v1z"/></svg>
-    );
+   
 
     return (
         <section className="did-you-know-section">
             <div className="did-you-know-card">
                 <div className="did-you-know-header">
-                  <LightbulbIcon />
                   <h3>Did You Know?</h3>
                 </div>
                 <p>"{facts[factIndex]}"</p>
@@ -222,8 +299,9 @@ const DidYouKnowSection = () => {
 };
 
 
-// --- 5. Jargon Buster Component (UPDATED) ---
+// --- 5. Jargon Buster Component (FIXED) ---
 const JargonBusterSection = () => {
+    // Fixed typos from previous version
     const terms = [
         { term: 'Deductible', def: 'A fixed amount you pay for your medical expenses before your insurance provider starts paying. A higher deductible usually means a lower premium.' },
         { term: 'No-Claim Bonus (NCB)', def: 'A reward given by the insurer for not making any claims in a policy year. It usually results in a discount on the next premium or an increased sum insured.' },
@@ -244,7 +322,7 @@ const JargonBusterSection = () => {
             <div className="accordion">
                 {terms.map((item, index) => (
                     <div key={item.term} className="accordion-item">
-                        <button onClick={() => toggleAccordion(index)} className="accordion-header">
+                        <button onClick={() => toggleAccordion(index)} className={`accordion-header ${openIndex === index ? 'open' : ''}`}>
                             <span>{item.term}</span>
                             <span className="accordion-icon">{openIndex === index ? '−' : '+'}</span>
                         </button>
