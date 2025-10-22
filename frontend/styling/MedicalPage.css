@@ -1,0 +1,442 @@
+/* --- Global Styles for Medical Page --- */
+.medical-page-container {
+  background-color: #f8f9fa; /* A very light grey for the page background */
+  padding-bottom: 4rem;
+}
+.main-page-title{
+  font-size: 5rem;
+  font-weight: 900; 
+  color: #2c3e50;
+ 
+  text-align: center;
+  margin-block: 50px;
+}
+.page-subtitle{
+  font-size: 1.5rem; 
+  color: #4a5568; 
+  max-width: 42rem; 
+  margin: 0 auto 2rem auto;
+  margin-top: -2.4rem;
+  margin-bottom: 3rem;
+}
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 3rem;
+}
+
+/* --- 1. Predictor Section --- */
+.predictor-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+  font-size: larger;
+}
+
+@media (min-width: 1024px) {
+  .predictor-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.predictor-form-container {
+  padding-right: 0;
+}
+
+@media (min-width: 1024px) {
+    .predictor-form-container {
+        padding-right: 2rem;
+    }
+}
+
+
+.predictor-title {
+  font-size: 2.65rem;
+  font-weight: 700;
+  color: #8DBCC7;
+}
+
+.predictor-subtitle {
+  font-size: 1.25rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.predictor-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.predictor-form .form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.predictor-form label {
+  display: block;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.predictor-form input,
+.predictor-form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  font-size: 1.2rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.predictor-form input:focus,
+.predictor-form select:focus {
+  outline: none;
+  border-color: #8DBCC7;
+  box-shadow: 0 0 0 3px rgba(141, 188, 199, 0.25);
+}
+
+.form-button {
+  width: 100%;
+  padding: 0.875rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: #8DBCC7;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-button:hover {
+  background-color: #A4CCD9;
+}
+
+.form-button:disabled {
+  background-color: #C4E1E6;
+  cursor: not-allowed;
+}
+
+.result-display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f4f8;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.result-placeholder p {
+  font-size: 1.25rem;
+  color: #6c757d;
+}
+
+.result-card {
+  width: 100%;
+}
+
+.result-label {
+  font-size: 1.35rem;
+  color: #495057;
+  font-weight: 600;
+}
+
+.result-value {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #8DBCC7;
+  margin: 0.5rem 0;
+}
+
+.result-comparison {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.result-comparison .higher { color: #e63946; font-weight: 700; }
+.result-comparison .lower { color: #2a9d8f; font-weight: 700; }
+
+
+.error-message {
+    color: #e63946;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    width: 100%;
+}
+
+.disclaimer {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.975rem;
+  color: #6c757d;
+}
+
+/* --- 2. Next Steps Section --- */
+.next-steps-section {
+  padding: 4rem 1rem;
+}
+
+.steps-timeline {
+  max-width: 60rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Timeline line */
+.steps-timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #C4E1E6;
+  border-radius: 2px;
+}
+
+.step {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 2.5rem;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+.step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #8DBCC7;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #f8f9fa;
+}
+
+.step h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.step p {
+  color: #6c757d;
+  font-size: 1.2rem;
+}
+
+
+/* --- 3. Explore Plans Section  --- */
+.explore-plans-section {
+  padding: 4rem 1rem;
+  background-color: #fff;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.plan-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  background-color: #fff;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.plan-logo {
+  height: 40px;
+  margin: 0 auto 1rem auto;
+  object-fit: contain;
+  font-size: 1.2rem;
+}
+
+.plan-type {
+  font-size: 1.5rem;
+  font-weight: 700; /* Bolder */
+  color: #495057;
+  margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.plan-description {
+    font-size: 1.3rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Allows this to take up space */
+}
+
+.plan-link {
+  color: #8DBCC7;
+  font-weight: 700;
+  margin-top: auto; /* Pushes to the bottom */
+}
+
+/* --- 4. Did You Know Section (UPDATED) --- */
+.did-you-know-section{
+  min-height: 400px;
+}
+.did-you-know-card {
+  margin: 0 auto;
+  background-image: url('/assets/dyk.png');
+  background-repeat: repeat;
+  background-size: contain;
+  width:100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 0.75rem; /* Slightly more rounded */
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.did-you-know-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    margin-top: 100px;
+    
+}
+
+.did-you-know-icon {
+    width: 70px;
+    height: 70px;
+    color: #2c3e50;
+}
+
+.did-you-know-card h3 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.did-you-know-card p {
+  font-size: 1.7rem;
+  color: #2c3e50;
+  min-height: 60px; 
+  font-style: italic;
+  max-width: 50%;
+  margin-top: 1.5rem;
+}
+
+.did-you-know-card button {
+  margin-top: 2rem;
+  background-color: transparent;
+  border: 2px solid #2c3e50;
+  color: #2c3e50;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  font-size: 1.4rem;
+}
+
+.did-you-know-card button:hover {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+
+/* --- 5. Jargon Buster Section (UPDATED) --- */
+.jargon-buster-section {
+  padding: 4rem 1rem;
+  background-color: #fff;
+}
+
+.accordion {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #495057;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.accordion-header:hover {
+    background-color: #f8f9fa;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #8DBCC7;
+    transition: transform 0.3s;
+}
+
+.accordion-header.open .accordion-icon {
+    transform: rotate(45deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  padding: 0 1rem;
+}
+
+.accordion-content.open {
+  max-height: 200px; 
+  padding: 0.5rem 1rem 1.5rem 1rem;
+}
+
+.accordion-content p {
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 1.2rem;
+}
+
