@@ -1,0 +1,52 @@
+.profile-container {
+  padding: 4rem 1rem;
+  background-color: #f0f4f8;
+  min-height: 80vh;
+}
+
+.profile-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+.profile-email {
+  font-size: 1.125rem;
+  color: #495057;
+  margin-bottom: 2rem;
+  word-wrap: break-word;
+}
+
+.profile-history {
+  margin-bottom: 2rem;
+}
+
+.profile-history h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.profile-history p {
+  font-style: italic;
+  color: #6c757d;
+}
+
+.logout-button {
+  background-color: #e63946; /* Red for logout */
+}
+
+.logout-button:hover {
+  background-color: #d62828;
+}

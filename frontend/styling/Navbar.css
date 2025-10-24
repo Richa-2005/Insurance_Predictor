@@ -89,3 +89,39 @@
   transform: scale(1.1) rotate(6deg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-link-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-size: 1.25rem; /* Match your pagesLink font size */
+}
+
+.auth-link-btn.primary {
+  background-color: var(--accent-color); /* Pale Green */
+  color: #155724; /* Dark green text */
+}
+
+/* Remove underline from buttons */
+.auth-link-btn::after {
+  display: none;
+}
+
+.auth-link-btn:not(.primary):hover {
+  background-color: var(--secondary-bg); /* Lighter blue */
+  color: white;
+}
+
+.auth-link-btn.primary:hover {
+  background-color: white;
+  color: var(--text-color);
+}
+

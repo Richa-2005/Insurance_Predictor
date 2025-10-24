@@ -5,7 +5,10 @@ import NavBar from '../pages/NavBar.jsx';
 import MedicalPage from '../pages/MedicalPage.jsx';
 import CarPage from '../pages/CarPage.jsx';
 import LifePage from '../pages/lifePage.jsx';
-import ProfilePage from '../pages/ProfilePage.jsx';
+import ProfilePage from './authentication/reactfiles/ProfilePage.jsx';
+import SignUpPage from './authentication/reactfiles/SignUpPage.jsx';
+import LoginPage from './authentication/reactfiles/LoginPage.jsx';
+
 export default function App() {
   return (
     <>
@@ -16,6 +19,8 @@ export default function App() {
           <Route path="/car" element={<CarPage />} />
           <Route path="/life" element={<LifePage />} />
           <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
         </Routes>
     </>
   )
