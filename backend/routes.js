@@ -1,8 +1,16 @@
-import { callTofFlask } from "./controllers.js";
 import express from 'express';
-const routes = express.Router();
+import { callTofFlask } from "./controllers/controllers.js";
+import { authenticateToken } from './middleware/authMiddleware.js';
+import { savePrediction, getHistory } from './controllers/historyController.js';
 
-routes.post('/predict',callTofFlask);
+const router = express.Router(); 
 
-export default routes;
+
+router.post('/predict', callTofFlask);
+
+
+router.post('/history', authenticateToken, savePrediction);
+router.get('/history', authenticateToken, getHistory);
+
+export default router; 
 
