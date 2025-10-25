@@ -37,11 +37,11 @@ This project is built using a **microservice architecture** to ensure separation
 
 ⦿ [x] Set up the Node.js gateway and connect it to the Flask service.
 
-⦿ [ ] Develop the complete React user interface.
+⦿ [x] Develop the complete React user interface.
 
-⦿ [ ] Implement JWT-based user authentication and database integration.
+⦿ [x] Implement JWT-based user authentication and database integration.
 
-⦿ [ ] Add a "Prediction History" feature for logged-in users.
+⦿ [x] Add a "Prediction History" feature for logged-in users.
 
 ⦿ [ ] Research and integrate a Car Insurance Prediction model.
 
