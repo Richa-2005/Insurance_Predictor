@@ -1,23 +1,77 @@
-.profile-container {
-  padding: 4rem 1rem;
-  background-color: #f0f4f8;
-  min-height: 80vh;
-}
+
 
 .profile-card {
-  max-width: 600px;
-  margin: 0 auto;
   background-color: #fff;
   padding: 2.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+
+
 .profile-title {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-color);
   margin-bottom: 2rem;
+}
+
+/* --- New Two-Column Grid Styles --- */
+.profile-grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to single column for mobile */
+  gap: 2rem;
+  padding: 2rem 1rem; /* Add padding here */
+  background-color: #f0f4f8; /* Apply background here */
+  min-height: calc(100vh - 80px); /* Adjust 80px based on your navbar height */
+}
+
+@media (min-width: 1024px) { /* Apply two columns on larger screens */
+  .profile-grid-container {
+    grid-template-columns: 300px 1fr; /* Fixed width sidebar, flexible main content */
+    padding: 3rem 2rem;
+  }
+}
+
+.profile-sidebar {
+  position: relative; /* Needed for child centering */
+}
+
+@media (min-width: 1024px) {
+  .profile-sidebar {
+    position: sticky;
+    top: calc(80px + 3rem); /* Navbar height + top padding */
+    height: calc(100vh - 80px - 6rem); /* Adjust based on navbar height and padding */
+    display: flex; /* Enable flexbox for centering */
+    align-items: center; /* Vertically center the card */
+    justify-content: center; /* Horizontally center (though width might fill) */
+  }
+}
+
+.profile-info-card {
+  width: 100%; /* Ensure card takes full width of sidebar */
+  max-width: 300px; /* Optional: Constrain width slightly */
+  margin: 0 auto; /* Center card if max-width is applied */
+}
+
+
+
+
+/* --- Adjustments for History within Main Content --- */
+.profile-main-content .profile-history {
+  margin-top: 0; /* Remove top margin */
+  padding-top: 0; /* Remove top padding */
+  border-top: none; /* Remove top border */
+}
+
+.profile-main-content .profile-history h3 {
+    text-align: center; /* Center the history title */
+    font-size: 1.75rem; /* Slightly larger title */
+}
+
+/* Ensure graph fits well in history card */
+.history-item-graph .comparison-graph {
+    margin: 0.5rem 0; /* Adjust margin */
 }
 
 .profile-email {
@@ -114,10 +168,10 @@
 }
 
 .history-item-card {
-  background-color: #f8f9fa; /* Light background for card */
+  background-color: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem; /* Keep padding */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
@@ -125,18 +179,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px dashed #ced4da;
 }
 
 .history-item-date {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #6c757d;
 }
 
 .history-item-type {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   padding: 0.2rem 0.6rem;
   border-radius: 0.25rem;
@@ -149,10 +202,9 @@
 .type-life { background-color: #2a9d8f; } /* Example color */
 
 .history-item-body {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  align-items: center;
+  display: block;
+  margin-bottom: 1rem;
+  
 }
 
 @media (min-width: 768px) {
@@ -164,16 +216,17 @@
 
 .history-item-prediction {
   text-align: center;
+  margin-bottom: 0rem; /* Add margin below prediction */
 }
 
 .history-item-label {
-  font-size: 0.9rem;
+  font-size: 1.5rem; /* Increased size */
   color: #6c757d;
-  margin-bottom: 0.25rem;
+  margin-bottom: -2.2rem;
 }
 
 .history-item-value {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--primary-bg);
 }
@@ -182,29 +235,9 @@
 .comparison-graph {
   width: 100%;
   margin: 1.5rem 0;
-  padding-top: 3.5rem; /* Add padding for the labels above */
   position: relative;
 }
 
-.graph-label-container {
-  position: absolute;
-  top: 0;
-  left: 10px; /* Match marker padding */
-  right: 10px; /* Match marker padding */
-  height: 3.5rem;
-}
-
-.graph-label {
-  position: absolute;
-  bottom: 0;
-  transform: translateX(-50%);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
 
 .labels{
   position: relative;
@@ -214,17 +247,31 @@
   margin-bottom: -20px;
   margin-left: 30px;
 }
-.user-label {
-  background-color: #8DBCC7;
-  color: white;
-  z-index: 4;
+
+ .static-graph-labels {
+  display: flex;
+  justify-content: space-around; /* Space them out */
+  margin-bottom: 0.75rem; /* Space between labels and track */
+  padding: 0 10px; /* Align roughly with track ends */
 }
 
-.avg-label {
+.static-label {
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 1rem; /* Increased size */
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.static-label.user {
+  background-color: #8DBCC7;
+  color: white;
+}
+
+.static-label.avg {
   background-color: #adb5bd;
   color: white;
-  z-index: 3;
-  margin-left: 250px;
 }
 
 .graph-track {
@@ -267,7 +314,7 @@
   justify-content: space-between;
   width: 100%;
   margin-top: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #495057;
 }
@@ -275,48 +322,30 @@
 .graph-summary {
   font-size: 1rem;
   color: #495057;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   font-style: italic;
   text-align: center;
 }
 
 
 /* --- Monthly Breakdown Styles --- */
-.monthly-breakdown {
-  margin: 1.5rem 0;
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 0.375rem;
-  border: 1px solid #dee2e6;
-  width: 100%;
-  margin-left: -15px;
+.history-monthly {
+    margin: -0.5rem 0 0 0; /* Add margin above */
+    padding: 0.5rem 0.75rem; /* Smaller padding */
+    background-color: #fff; /* White background */
+    border: 1px solid #e9ecef; /* Lighter border */
+    width: fit-content; /* Fit the content width */
+    margin-left: auto; /* Center align (with margin-right: auto) */
+    margin-right: auto;
 }
 
-.monthly-breakdown p {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #495057;
-  margin: 0;
+.history-monthly p {
+    font-size: 1rem; /* Slightly smaller font */
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
 }
 
-/* --- CTA Button Styles --- */
-.cta-button {
-  width: 100%;
-  padding: 0.875rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #fff;
-  background-color: #8DBCC7; /* Use primary color */
-  border: none;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.cta-button:hover {
-  background-color: #A4CCD9;
-  transform: scale(1.02);
-}
 
 /* Specific adjustments for graph in history */
 .history-graph {
@@ -325,13 +354,13 @@
 }
 
 .history-graph .graph-min-max-labels {
-  font-size: 0.75rem; /* Smaller min/max labels */
+  font-size: 1rem; /* Smaller min/max labels */
 }
 .history-graph .graph-label {
-  font-size: 0.7rem; /* Smaller popup labels */
+  font-size: 1rem; /* Smaller popup labels */
 }
 .history-graph .graph-summary {
-  font-size: 0.8rem; /* Smaller summary text */
+  font-size: 1rem; /* Smaller summary text */
   margin-top: 0.5rem;
 }
 
@@ -340,7 +369,7 @@
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px dashed #ced4da;
-  font-size: 0.85rem;
+  font-size: 1.3rem;
   color: #6c757d;
 }
 
