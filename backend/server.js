@@ -3,7 +3,8 @@ import cors from 'cors';
 import routes from './routes.js';
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
-
+import dotenv from 'dotenv';
+dotenv.config();
 // --- FIX: Use fs to read the JSON file ---
 import fs from 'fs';
 import path from 'path';

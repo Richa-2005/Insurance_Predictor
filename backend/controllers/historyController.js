@@ -1,11 +1,9 @@
 import admin from 'firebase-admin'; // Needed for Firestore Timestamp
-import { db } from '../server.js'; // Import the initialized db instance
-
-
+import { db } from '../server.js'; // Import the initialized db insta
+const appId = process.env.FIRESTORE_APP_ID || 'insuransure-fallback';
 export const savePrediction = async (req, res) => {
   const userId = req.user.uid;
   const predictionData = req.body; // { input: {...}, output: {...}, analysis: {...}, timestamp: ... }
-  const appId = import.meta.env.VITE_FIREBASE_APP_ID; 
 
   console.log(`Saving history for user ${userId}:`, predictionData);
 
@@ -33,8 +31,6 @@ export const savePrediction = async (req, res) => {
 // Controller to fetch prediction history
 export const getHistory = async (req, res) => {
   const userId = req.user.uid; 
-  const appId = import.meta.env.VITE_FIREBASE_APP_ID; 
-
   console.log(`Fetching history for user ${userId}`);
 
   try {

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../styling/MedicalPage.css'; 
-
+import {useAuth} from '../src/authentication/reactfiles/Auth.jsx'
+import { getIdToken } from 'firebase/auth';
 
 export default function MedicalPage() {
   return (
@@ -19,7 +20,7 @@ export default function MedicalPage() {
 }
 
 
-// --- 1. Predictor Section Component (UPDATED) ---
+// --- 1. Predictor Section Component---
 const PredictorSection = () => {
   // State for form inputs
   const [age, setAge] = useState('');
@@ -33,6 +34,12 @@ const PredictorSection = () => {
   const [analysis, setAnalysis] = useState(null); // Will store the age_group_analysis object
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  //for saving prediction history to firebase
+  const [predictionResult, setPredictionResult] = useState(null);
+  // --- Get Auth Context ---
+  const { currentUser } = useAuth(); // Get the current user status
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,12 +75,58 @@ const PredictorSection = () => {
       setPrediction(result.predicted_premium);
       setAnalysis(result.age_group_analysis);
 
+      // --- Store the FULL result object ---
+      setPredictionResult({
+          input: requestData, // Save the input used
+          output: result.predicted_premium, // The predicted value
+          analysis: result.age_group_analysis, // The analysis data
+          timestamp: new Date().toISOString(), // Add a timestamp
+          predictorType: 'medical' 
+      });
+
     } catch (err) {
       setError(err.message);
+      setPredictionResult(null);
     } finally {
       setLoading(false);
     }
   };
+
+   //useEffect Hook to Save History 
+  useEffect(() => {
+    // Only run if there's a new predictionResult and a logged-in (non-anonymous) user
+    if (predictionResult && currentUser && !currentUser.isAnonymous) {
+      const saveHistory = async () => {
+        try {
+          // Get the Firebase ID token for the current user
+          const token = await getIdToken(currentUser);
+
+          const response = await fetch('http://localhost:8000/api/history', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // --- Include the token in the Authorization header ---
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(predictionResult) // Send the full result object
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to save history:', errorData.error || 'Unknown error');
+            // Optional: Show a small, non-blocking notification to the user
+          } else {
+            console.log('Prediction history saved successfully.');
+          }
+        } catch (error) {
+          console.error('Error saving prediction history:', error);
+        }
+      };
+
+      saveHistory(); 
+    }
+  
+  }, [predictionResult, currentUser]);
   
   const scrollToPlans = () => {
     document.getElementById('explore-plans')?.scrollIntoView({ behavior: 'smooth' });
@@ -85,7 +138,7 @@ const PredictorSection = () => {
         <h2 className="predictor-title">Get Your Instant Estimate</h2>
         <p className="predictor-subtitle">Enter your details to get a data-driven premium estimate.</p>
         <form onSubmit={handleSubmit} className="predictor-form">
-          {/* ... (Form fields remain unchanged) ... */}
+        
           <div className="form-group">
             <label htmlFor="age">Age</label>
             <input id="age" type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="e.g., 45" />
@@ -119,7 +172,7 @@ const PredictorSection = () => {
       <div className="result-display-container">
         {error && <div className="error-message">{error}</div>}
         
-        {/* --- Display logic for placeholder vs. result --- */}
+      
         {!prediction && !analysis && !error && (
             <div className="result-placeholder">
                 <p>Your personalized estimate will appear here.</p>
@@ -130,8 +183,7 @@ const PredictorSection = () => {
           <div className="result-card">
             <p className="result-label">Estimated Annual Premium</p>
             <p className="result-value">₹{prediction.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
-            
-            {/* --- NEW DYNAMIC RANGE GRAPH --- */}
+     
             <RangeComparisonGraph 
               userPrice={prediction} 
               analysis={analysis} 
@@ -152,7 +204,7 @@ const PredictorSection = () => {
   );
 };
 
-// --- New Sub-Component for the DYNAMIC RANGE Graph ---
+// --- Sub-Component for the DYNAMIC RANGE Graph ---
 const RangeComparisonGraph = ({ userPrice, analysis }) => {
   const { min_premium, avg_premium, max_premium, age_range } = analysis;
 
@@ -210,7 +262,7 @@ const RangeComparisonGraph = ({ userPrice, analysis }) => {
     </>
   );
 };
-// --- 2. "What's Next?" Guide Component (Unchanged) ---
+// --- 2. "What's Next?" Guide Component---
 const NextStepsSection = () => (
   <section className="next-steps-section">
     <h2 className="section-title">Your Journey to Coverage</h2>
@@ -241,7 +293,7 @@ const NextStepsSection = () => (
 );
 
 
-// --- 3. Explore Plans Component (UPDATED) ---
+// --- 3. Explore Plans Component ---
 const ExplorePlansSection = () => {
     const plans = [
         { name: 'Star Health', logo: 'https://placehold.co/120x40/E2E8F0/475569?text=Star+Health', link: 'https://www.starhealth.in/', type: 'Family & Individual Plans', description: 'A leading standalone health insurer, popular for a wide range of specialized health plans.' },
@@ -268,7 +320,7 @@ const ExplorePlansSection = () => {
     );
 };
 
-// --- 4. "Did You Know?" Component (UPDATED) ---
+// --- 4. "Did You Know?" Component ---
 const DidYouKnowSection = () => {
     const facts = [
         "In India, health insurance plans offer tax benefits under Section 80D of the Income Tax Act.",
@@ -299,9 +351,9 @@ const DidYouKnowSection = () => {
 };
 
 
-// --- 5. Jargon Buster Component (FIXED) ---
+// --- 5. Jargon Buster Component---
 const JargonBusterSection = () => {
-    // Fixed typos from previous version
+    
     const terms = [
         { term: 'Deductible', def: 'A fixed amount you pay for your medical expenses before your insurance provider starts paying. A higher deductible usually means a lower premium.' },
         { term: 'No-Claim Bonus (NCB)', def: 'A reward given by the insurer for not making any claims in a policy year. It usually results in a discount on the next premium or an increased sum insured.' },

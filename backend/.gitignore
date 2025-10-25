@@ -1,2 +1,3 @@
 # Firebase Admin SDK Key File (DO NOT COMMIT)
 serviceAccountKey.json
+.env
